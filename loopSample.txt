@@ -1,0 +1,30 @@
+;*****************************************************************
+; loopSample – sample program for VCPU-2016
+; Loop skeleton
+; Sheranga Balasuriya, April 14, 2016
+;*****************************************************************
+Addr	Code	Label		Instruction
+
+0000	C01E	Start		BRA		MAIN
+0006	0005	LoopLen		dw		5				; number of times to loop
+000C	0001	LoopDec		dw		1				; loop decrement
+0012	0072	Aptr		dw		Num1
+0018	0078	Bptr		dw		Result
+
+001E	4060	MAIN		MOV		R0, #LoopLen	; load pointer to counter
+0024	2802				LDR		R2, [R0]		; load counter value
+002A	40C0				MOV		R0, #LoopDec	; load loop decrement pointer
+0030	2803				LDR		R3, [R0]		; load loop decrement
+0036	4120				MOV		R0, #Aptr		; load pointer
+003C	2804				LDR		R4, [R0]		; load sample number pointer
+0042	2845				LDR		R5, [R4]		; load sample number
+0048	0435	AGAIN		ADD		R5, R3			; sample operation
+004E	0232				SUB		R2, R3			; decrement counter
+0054	81F3				BNE		AGAIN			; do again if not zero
+005A	4180				MOV		R0, #Bptr		; load pointer address
+0060	2806				LDR		R6, [R0]		; load pointer
+0066	2056				STR		R5,	[R6]		; store sample result
+006C	E000				STP
+
+0072	0011	Num1		dw		0011
+0078	0000	Result		dw		0000
